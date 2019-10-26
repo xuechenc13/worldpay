@@ -1,5 +1,6 @@
 package com.worldpay.worldpay.storage;
 
+import com.worldpay.worldpay.entity.IdOfferPair;
 import com.worldpay.worldpay.entity.Offer;
 
 import java.util.ArrayList;
@@ -21,14 +22,15 @@ public class InMemoryStorage implements OfferStorage {
     }
 
     @Override
-    public List<Offer> queryOffers() {
-        List<Offer> returnOffers = new ArrayList<>();
-        returnOffers.addAll(idOfferMap.values());
+    public Map<Long, Offer> queryOffers() {
+        Map<Long, Offer> returnOffers = new HashMap<>();
+        returnOffers.putAll(idOfferMap);
         return returnOffers;
     }
 
     @Override
     public Offer queryOffer(long id) {
+
         return idOfferMap.get(id);
     }
 
@@ -38,9 +40,9 @@ public class InMemoryStorage implements OfferStorage {
     }
 
     @Override
-    public List<Offer> deleteOffer() {
-        List<Offer> returnOffers = new ArrayList<>();
-        returnOffers.addAll(idOfferMap.values());
+    public Map<Long, Offer> deleteOffer() {
+        Map<Long, Offer> returnOffers = new HashMap<>();
+        returnOffers.putAll(idOfferMap);
         idOfferMap.clear();
         return returnOffers;
     }

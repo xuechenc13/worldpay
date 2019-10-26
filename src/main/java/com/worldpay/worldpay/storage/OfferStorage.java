@@ -1,12 +1,12 @@
 package com.worldpay.worldpay.storage;
 
 import com.worldpay.worldpay.entity.Offer;
-
 import java.util.List;
+import java.util.Map;
 
 public interface OfferStorage {
     long addOffer(Offer offer);
-    List<Offer> queryOffers();
+    Map<Long, Offer> queryOffers();
 
     /**
      * Returns Offer with associated id, or null if there is no offer has the given id.
@@ -20,5 +20,5 @@ public interface OfferStorage {
      */
     Offer deleteOffer(long id);
 
-    List<Offer> deleteOffer();
+    Map<Long, Offer> deleteOffer();
 }

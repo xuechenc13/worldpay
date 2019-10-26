@@ -5,9 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InMemoryStorageTest {
 
@@ -38,43 +38,43 @@ public class InMemoryStorageTest {
 
     @Test
     public void queryOffersWhenEmpty() {
-        Assert.assertEquals(Collections.emptyList(), storage.queryOffers());
+        Assert.assertEquals(Collections.emptyMap(), storage.queryOffers());
     }
 
     @Test
     public void queryOffersWhenThereIsSingleOffer() {
-        List<Offer> expected = new ArrayList<>();
+        Map<Long, Offer> expected = new HashMap<>();
         Offer offer = new Offer();
-        expected.add(offer);
+        expected.put((long) 0, offer);
 
         storage.addOffer(offer);
 
-        List<Offer> actual= storage.queryOffers();
+        Map<Long, Offer> actual= storage.queryOffers();
 
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void queryOffersWhenThereAreMultipleOffers() {
-        List<Offer> expected = new ArrayList<>();
+        Map<Long, Offer> expected = new HashMap<>();
         Offer offer1 = new Offer();
         Offer offer2 = new Offer();
-        expected.add(offer1);
-        expected.add(offer2);
+        expected.put((long) 0, offer1);
+        expected.put((long) 1, offer2);
 
         storage.addOffer(offer1);
         storage.addOffer(offer2);
 
-        List<Offer> actual= storage.queryOffers();
+        Map<Long, Offer> actual= storage.queryOffers();
 
         Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void queryOffersMultipleTimesShouldHaveSameOffers() {
-        List<Offer> expected = new ArrayList<>();
+        Map<Long, Offer> expected = new HashMap<>();
         Offer offer = new Offer();
-        expected.add(offer);
+        expected.put((long) 0, offer);
         storage.addOffer(offer);
 
         Assert.assertEquals(expected, storage.queryOffers());
@@ -83,21 +83,21 @@ public class InMemoryStorageTest {
 
     @Test
     public void editQueriedOffersDoNotEffectOffersInStorage() {
-        List<Offer> expected = new ArrayList<>();
+        Map<Long, Offer> expected = new HashMap<>();
         Offer offer1 = new Offer();
         Offer offer2 = new Offer();
-        expected.add(offer1);
-        expected.add(offer2);
+        expected.put((long) 0, offer1);
+        expected.put((long) 1, offer2);
 
         storage.addOffer(offer1);
         storage.addOffer(offer2);
 
-        List<Offer> queriedOffers = storage.queryOffers();
+        Map<Long, Offer>queriedOffers = storage.queryOffers();
         Assert.assertEquals(expected, queriedOffers);
 
-        queriedOffers.add(new Offer());
+        queriedOffers.put((long) 2, new Offer());
 
-        List<Offer> AnotherQueriedOffers = storage.queryOffers();
+        Map<Long, Offer> AnotherQueriedOffers = storage.queryOffers();
         Assert.assertEquals(expected, AnotherQueriedOffers);
     }
 
@@ -172,16 +172,16 @@ public class InMemoryStorageTest {
 
     @Test
     public void deleteAllOffer() {
-        List<Offer> expected = new ArrayList<>();
+        Map<Long, Offer> expected = new HashMap<>();
         Offer offer1 = new Offer();
         Offer offer2 = new Offer();
-        expected.add(offer1);
-        expected.add(offer2);
+        expected.put((long) 0, offer1);
+        expected.put((long) 1, offer2);
 
         storage.addOffer(offer1);
         storage.addOffer(offer2);
 
-        List<Offer> actual = storage.deleteOffer();
+        Map<Long, Offer> actual = storage.deleteOffer();
         Assert.assertEquals(expected, actual);
 
     }
