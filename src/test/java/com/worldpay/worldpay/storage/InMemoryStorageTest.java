@@ -129,4 +129,44 @@ public class InMemoryStorageTest {
         Offer actual = storage.queryOffer(10);
         Assert.assertEquals(null, actual);
     }
+
+    @Test
+    public void deleteOffer() {
+        Offer offer = new Offer();
+        long id = storage.addOffer(offer);
+
+        Offer deletedOffer = storage.deleteOffer(id);
+        Assert.assertEquals(offer, deletedOffer);
+    }
+
+    @Test
+    public void deleteNonExistOffer() {
+        Offer offer = new Offer();
+        storage.addOffer(new Offer());
+
+        // There are only 1 offer in the storage, try to delete with id > 1
+
+        Offer deletedOffer = storage.deleteOffer(10);
+        Assert.assertEquals(null, deletedOffer);
+    }
+
+    @Test
+    public void deleteSameIdTwice() {
+        Offer offer = new Offer();
+        long id = storage.addOffer(offer);
+
+        Offer deletedOffer = storage.deleteOffer(id);
+        Assert.assertEquals(offer, deletedOffer);
+
+        Offer secondDeletedOffer = storage.deleteOffer(id);
+        Assert.assertEquals(null, secondDeletedOffer);
+    }
+
+    @Test
+    public void addOfferAfterDeleteOffer() {
+        storage.addOffer(new Offer());
+        storage.deleteOffer(0);
+        long id = storage.addOffer(new Offer());
+        Assert.assertEquals(1, id);
+    }
 }
