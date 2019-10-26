@@ -169,4 +169,20 @@ public class InMemoryStorageTest {
         long id = storage.addOffer(new Offer());
         Assert.assertEquals(1, id);
     }
+
+    @Test
+    public void deleteAllOffer() {
+        List<Offer> expected = new ArrayList<>();
+        Offer offer1 = new Offer();
+        Offer offer2 = new Offer();
+        expected.add(offer1);
+        expected.add(offer2);
+
+        storage.addOffer(offer1);
+        storage.addOffer(offer2);
+
+        List<Offer> actual = storage.deleteOffer();
+        Assert.assertEquals(expected, actual);
+
+    }
 }

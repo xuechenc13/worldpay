@@ -19,4 +19,6 @@ public interface OfferStorage {
      * @return the deleted offer, or null if there is no such offer with the given id.
      */
     Offer deleteOffer(long id);
+
+    List<Offer> deleteOffer();
 }

@@ -36,4 +36,12 @@ public class InMemoryStorage implements OfferStorage {
     public Offer deleteOffer(long id) {
         return idOfferMap.remove(id);
     }
+
+    @Override
+    public List<Offer> deleteOffer() {
+        List<Offer> returnOffers = new ArrayList<>();
+        returnOffers.addAll(idOfferMap.values());
+        idOfferMap.clear();
+        return returnOffers;
+    }
 }
