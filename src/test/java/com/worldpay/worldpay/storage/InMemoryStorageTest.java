@@ -100,4 +100,33 @@ public class InMemoryStorageTest {
         List<Offer> AnotherQueriedOffers = storage.queryOffers();
         Assert.assertEquals(expected, AnotherQueriedOffers);
     }
+
+    @Test
+    public void queryOffer() {
+        Offer expected = new Offer();
+        long id = storage.addOffer(expected);
+        Offer actual = storage.queryOffer(id);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void queryOfferMultipleTimesShouldReturnSameOffer() {
+        Offer expected = new Offer();
+        long id = storage.addOffer(expected);
+
+        Offer actual = storage.queryOffer(id);
+        Assert.assertEquals(expected, actual);
+
+        actual = storage.queryOffer(id);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void queryNonExistId() {
+        storage.addOffer(new Offer());
+
+        // There are only 1 offer in the storage, try to query with id > 1
+        Offer actual = storage.queryOffer(10);
+        Assert.assertEquals(null, actual);
+    }
 }

@@ -8,13 +8,11 @@ import java.util.List;
 public class InMemoryStorage implements OfferStorage {
 
     private List<Offer> offers = new ArrayList<>();
-    private long offerCount = 0;
 
     @Override
     public long addOffer(Offer offer) {
-        long newId = offerCount;
+        long newId = offers.size();
         offers.add(offer);
-        offerCount += 1;
         return newId;
     }
 
@@ -23,5 +21,13 @@ public class InMemoryStorage implements OfferStorage {
         List<Offer> returnOffers = new ArrayList<>();
         returnOffers.addAll(offers);
         return returnOffers;
+    }
+
+    @Override
+    public Offer queryOffer(long id) {
+        if (id > offers.size()) {
+            return null;
+        }
+        return offers.get((int) id);
     }
 }
