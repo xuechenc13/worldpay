@@ -1,0 +1,12 @@
+Restful API #127.0.0.1/offer
+
+There are several assumption below :
+
+1. Users know the offer id so that they can query and delete the offer by id.
+
+2. Frontend developers will deal with expire date on the screen, thus when query an offer, no matter whether this offer has been expired yet, an offer will be provided. 
+
+3. An interface should be implemented when other developers would like to storage date in different way. 
+
+
+ 
