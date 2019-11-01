@@ -1,11 +1,8 @@
 package com.worldpay.worldpay.storage;
 
-import com.worldpay.worldpay.entity.IdOfferPair;
 import com.worldpay.worldpay.entity.Offer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class InMemoryStorage implements OfferStorage {
