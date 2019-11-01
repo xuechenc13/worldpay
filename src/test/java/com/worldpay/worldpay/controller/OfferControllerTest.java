@@ -3,7 +3,6 @@ package com.worldpay.worldpay.controller;
 import com.worldpay.worldpay.utility.DateTimeHelper;
 import org.json.JSONObject;
 import org.junit.Test;
-import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -118,5 +117,72 @@ public class OfferControllerTest {
     }
 
 
+
+    @Test
+    public void deleteAnValidOffer() throws Exception {
+        JSONObject request = new JSONObject();
+        request.put("name", "Harry Potter");
+        request.put("price", 450);
+        request.put("expiredDate", DateTimeHelper.covertToDateString(new Date(System.currentTimeMillis() + 60 * 1000)));
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post("/offer")
+                        .headers(httpHeaders)
+                        .content(request.toString());
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
+
+
+        RequestBuilder getRequestBuilder =
+                MockMvcRequestBuilders.delete("/offer/0");
+
+
+        mockMvc.perform(getRequestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Harry Potter"));
+    }
+
+    @Test
+    public void deleteNonExistOffer() throws Exception {
+        RequestBuilder getRequestBuilder =
+                MockMvcRequestBuilders.delete("/offer/0");
+
+
+        mockMvc.perform(getRequestBuilder)
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void deleteOffers() throws Exception {
+        JSONObject request = new JSONObject();
+        request.put("name", "Harry Potter");
+        request.put("price", 450);
+        request.put("expiredDate", DateTimeHelper.covertToDateString(new Date(System.currentTimeMillis() + 60 * 1000)));
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+        RequestBuilder requestBuilder =
+                MockMvcRequestBuilders.post("/offer")
+                        .headers(httpHeaders)
+                        .content(request.toString());
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk());
+
+        RequestBuilder deleteRequestBuilder =
+                MockMvcRequestBuilders.delete("/offer");
+
+
+        mockMvc.perform(deleteRequestBuilder)
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
 }

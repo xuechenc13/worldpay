@@ -31,4 +31,16 @@ public class OfferService {
             return null;
         }
     }
+
+    public Map<Long, Offer> deleteOffers() {
+        return offerStorage.deleteOffer();
+    }
+    public Offer deleteAnOffer(String id) {
+        try {
+            long queryId = Long.parseLong(id);
+            return offerStorage.deleteOffer(queryId);
+        } catch (NumberFormatException | NullPointerException ex) {
+            return null;
+        }
+    }
 }

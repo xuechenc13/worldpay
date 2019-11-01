@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,6 +37,27 @@ public class OfferController {
             return ResponseEntity.ok().body(offer);
         } else {
            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping(value = "/offer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity deleteAnOffer(@PathVariable("id") String id) {
+        Offer removeOffer = offerService.deleteAnOffer(id);
+        if(null != removeOffer) {
+            return ResponseEntity.ok().body(removeOffer);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping(value = "/offer" , produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity deleteOffers() {
+        Map<Long, Offer> removeOffer = offerService.deleteOffers();
+        if(null != removeOffer) {
+            return ResponseEntity.ok().body(removeOffer);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
